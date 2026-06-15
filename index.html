@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guillermo Jiménez Antón</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f3;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --accent: #c9a84c;
+      --border: #e2e0da;
+      --link: #1a1a1a;
+      --max: 680px;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav-name {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── LAYOUT ── */
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    /* ── HERO ── */
+    .hero-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--muted);
+      overflow: hidden;
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-meta { display: flex; flex-direction: column; gap: 4px; }
+    .hero-name { font-size: 17px; font-weight: 600; }
+    .hero-sub { font-size: 13px; color: var(--muted); }
+    .hero-socials { display: flex; gap: 14px; margin-top: 4px; }
+    .hero-socials a {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color .15s;
+    }
+    .hero-socials a:hover { color: var(--text); }
+    .hero-socials svg { width: 13px; height: 13px; }
+
+    .tagline {
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 16px;
+      letter-spacing: -.01em;
+    }
+    .bio { font-size: 15px; color: var(--muted); line-height: 1.65; margin-bottom: 48px; }
+
+    /* ── SECTIONS ── */
+    .section { margin-bottom: 48px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Currently */
+    .currently-row {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 10px 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .currently-row:last-child { border-bottom: none; }
+    .currently-key {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding-top: 1px;
+    }
+    .currently-val { font-size: 14px; color: var(--text); }
+    .currently-val a { color: var(--text); font-weight: 500; }
+
+    /* Experience */
+    .exp-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      cursor: pointer;
+      gap: 12px;
+    }
+    .exp-left { flex: 1; }
+    .exp-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .exp-company {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .exp-company .dot { color: var(--border); }
+    .exp-right { display: flex; align-items: center; gap: 10px; }
+    .exp-date { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .toggle {
+      width: 20px; height: 20px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 14px; flex-shrink: 0;
+      transition: background .15s;
+      user-select: none;
+    }
+    .exp-item.open .toggle { background: var(--text); color: var(--bg); }
+    .exp-body {
+      display: none;
+      padding-top: 12px;
+    }
+    .exp-item.open .exp-body { display: block; }
+    .exp-body p { font-size: 13.5px; color: var(--muted); margin-bottom: 8px; line-height: 1.6; }
+    .exp-body ul { padding-left: 16px; }
+    .exp-body li { font-size: 13.5px; color: var(--muted); margin-bottom: 5px; line-height: 1.55; }
+    .exp-sub-period {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 10px 0 4px;
+      letter-spacing: .02em;
+    }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .tag {
+      font-size: 11px;
+      background: var(--border);
+      color: var(--muted);
+      padding: 3px 9px;
+      border-radius: 20px;
+      letter-spacing: .02em;
+    }
+
+    /* Projects */
+    .proj-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .proj-item:last-child { border-bottom: none; }
+    .proj-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      cursor: pointer;
+      gap: 12px;
+    }
+    .proj-title { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+    .proj-date { font-size: 12px; color: var(--muted); white-space: nowrap; }
+    .proj-body { display: none; padding-top: 12px; }
+    .proj-item.open .proj-body { display: block; }
+    .proj-item.open .toggle { background: var(--text); color: var(--bg); }
+    .proj-body p { font-size: 13.5px; color: var(--muted); margin-bottom: 8px; line-height: 1.6; }
+    .proj-body ul { padding-left: 16px; margin-bottom: 8px; }
+    .proj-body li { font-size: 13.5px; color: var(--muted); margin-bottom: 5px; line-height: 1.55; }
+    .proj-body .sublabel { font-size: 12px; font-weight: 600; color: var(--text); margin: 10px 0 4px; }
+    .proj-link {
+      font-size: 12px;
+      color: var(--text);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* Education */
+    .edu-item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .edu-item:last-child { border-bottom: none; }
+    .edu-degree { font-size: 15px; font-weight: 600; }
+    .edu-school { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    /* Skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      row-gap: 10px;
+      column-gap: 16px;
+    }
+    .skill-label { font-size: 13px; font-weight: 500; color: var(--text); }
+    .skill-val { font-size: 13px; color: var(--muted); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a {
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: 12px; color: var(--muted); }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 16px; }
+      main { padding: 36px 20px 60px; }
+      .tagline { font-size: 19px; }
+      footer { padding: 20px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-name">Guillermo Jiménez</span>
+  <div class="nav-links">
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- Hero -->
+  <div class="hero-card">
+    <div class="avatar"><img src="foto_CV.jpeg" alt="Guillermo Jiménez Antón" /></div>
+    <div class="hero-meta">
+      <span class="hero-name">Guillermo Jiménez Antón</span>
+      <span class="hero-sub">FPGA &amp; Embedded Systems Engineer · Madrid, Spain</span>
+      <div class="hero-socials">
+        <a href="https://linkedin.com/in/guillermojmn" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/guillermojmn" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="https://gitlab.com/guillermojmn" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 01-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 014.82 2a.43.43 0 01.58 0 .42.42 0 01.11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0118.6 2a.43.43 0 01.58 0 .42.42 0 01.11.18l2.44 7.51L23 13.45a.84.84 0 01-.35.94z"/></svg>
+          GitLab
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <p class="tagline">Building hardware that meets the real world — signal processing, FPGA cores, and embedded systems that work.</p>
+  <p class="bio">
+    Computer Engineer specialized in FPGA development and digital design, currently working on GNSS signal processing systems
+    and IP core development at GMV (Madrid). Background spanning RTL design in VHDL, UVM/cocotb verification,
+    and real-time embedded firmware. Actively exploring opportunities in Switzerland.
+  </p>
+
+  <!-- Currently -->
+  <div class="section">
+    <div class="section-label">Currently</div>
+    <div class="currently-row">
+      <span class="currently-key">Working</span>
+      <span class="currently-val">Junior Hardware Engineer at GMV — GNSS/Galileo FPGA IP core development, ZCU216 RFSoC</span>
+    </div>
+    <div class="currently-row">
+      <span class="currently-key">Building</span>
+      <span class="currently-val">Verification environments with UVM &amp; cocotb for tracking channel signal processing cores</span>
+    </div>
+    <div class="currently-row">
+      <span class="currently-key">Exploring</span>
+      <span class="currently-val">Opportunities in hardware engineering and consulting — with a focus on Switzerland</span>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  <div class="section" id="experience">
+    <div class="section-label">Experience</div>
+
+    <div class="exp-item">
+      <div class="exp-header" onclick="toggle(this)">
+        <div class="exp-left">
+          <div class="exp-title">Junior Hardware Engineer — GNSS Signal Processing</div>
+          <div class="exp-company">GMV <span class="dot">·</span> Madrid, Spain</div>
+        </div>
+        <div class="exp-right">
+          <span class="exp-date">2024 – Present</span>
+          <span class="toggle">+</span>
+        </div>
+      </div>
+      <div class="exp-body">
+        <p>FPGA development for GNSS/Galileo signal processing pipelines within the GEODE/PRESENCE project, targeting Xilinx ZCU102 and ZCU216 RFSoC boards.</p>
+        <ul>
+          <li>Design of configurable VHDL IP cores for GNSS signal processing pipelines</li>
+          <li>UVM testbench development for DUTs: serializer, code generator, Rx control, tracking channel</li>
+          <li>Cocotb-based Python simulation and debugging in Vivado / QuestaSim</li>
+          <li>Golden model alignment, pipeline latency calibration, and waveform-first debugging</li>
+          <li>CI/CD regression workflows using GitLab pipelines</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">VHDL</span><span class="tag">Vivado</span><span class="tag">UVM</span>
+          <span class="tag">Cocotb</span><span class="tag">QuestaSim</span><span class="tag">ZCU216</span><span class="tag">GitLab CI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-header" onclick="toggle(this)">
+        <div class="exp-left">
+          <div class="exp-title">Business Process Automation Intern</div>
+          <div class="exp-company">Previous internships <span class="dot">·</span> RPA &amp; Embedded</div>
+        </div>
+        <div class="exp-right">
+          <span class="exp-date">2022 – 2024</span>
+          <span class="toggle">+</span>
+        </div>
+      </div>
+      <div class="exp-body">
+        <p>Internship experience spanning RPA development and embedded systems, building automation solutions and firmware for industrial and IoT applications.</p>
+        <ul>
+          <li>Designed and deployed RPA workflows for business process automation</li>
+          <li>Embedded firmware development on ESP32 and Arduino platforms</li>
+          <li>I2C/SPI driver implementation from datasheets, sensor integration</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">RPA</span><span class="tag">ESP32</span><span class="tag">C/C++</span><span class="tag">Python</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Projects -->
+  <div class="section" id="projects">
+    <div class="section-label">Projects</div>
+
+    <div class="proj-item">
+      <div class="proj-header" onclick="toggleProj(this)">
+        <div>
+          <div class="proj-title">Embedded Orientation Monitoring &amp; Alert System — ESP32 &amp; IMU</div>
+          <div class="exp-company" style="margin-top:2px">Final Degree Project (TFG)</div>
+        </div>
+        <div class="exp-right">
+          <span class="proj-date">Sep – Dec 2025</span>
+          <span class="toggle">+</span>
+        </div>
+      </div>
+      <div class="proj-body">
+        <p>Complete real-time IoT monitoring system capable of detecting dangerous orientations in an autonomous vehicle (AGV) and triggering local and remote alerts — even without network connectivity.</p>
+        <div class="sublabel">Key technical features</div>
+        <ul>
+          <li>Microcontroller: ESP32 (WiFi + BT); inertial sensor: MPU-6500 (6-DOF)</li>
+          <li>Sensor fusion via complementary filter → roll, pitch &amp; yaw estimation</li>
+          <li>Quaternion-based orientation (gimbal lock-free)</li>
+          <li>Local alarms: LED + buzzer active in degraded mode (no network required)</li>
+          <li>Remote alerts via Telegram Bot with real-time push notifications</li>
+          <li>Historical monitoring: InfluxDB + Grafana dashboards</li>
+        </ul>
+        <div class="sublabel">Communication stack</div>
+        <ul>
+          <li>I²C — ESP32 ↔ IMU</li>
+          <li>WiFi/TCP — ESP32 → Node.js backend (NDJSON streaming)</li>
+          <li>WebSocket — Backend → Three.js 3D web interface</li>
+          <li>HTTP — Backend → InfluxDB &amp; Telegram Bot API</li>
+        </ul>
+        <div class="tags" style="margin-bottom:10px">
+          <span class="tag">ESP32</span><span class="tag">C/C++</span><span class="tag">Node.js</span>
+          <span class="tag">Three.js</span><span class="tag">InfluxDB</span><span class="tag">Grafana</span>
+        </div>
+        <a class="proj-link" href="https://github.com/guillermojmn/ESP32---MPU6500" target="_blank">↗ View source on GitHub</a>
+        &nbsp;&nbsp;
+        <a class="proj-link" href="https://www.youtube.com/watch?v=TU_LINK_AQUI" target="_blank">▶ Live demo</a>
+      </div>
+    </div>
+
+    <div class="proj-item">
+      <div class="proj-header" onclick="toggleProj(this)">
+        <div>
+          <div class="proj-title">GNSS Signal Processing — FPGA IP Core Development</div>
+          <div class="exp-company" style="margin-top:2px">GMV · GEODE/PRESENCE Project</div>
+        </div>
+        <div class="exp-right">
+          <span class="proj-date">2024 – Present</span>
+          <span class="toggle">+</span>
+        </div>
+      </div>
+      <div class="proj-body">
+        <ul>
+          <li>Configurable VHDL IP cores for GNSS/Galileo signal processing pipelines</li>
+          <li>Vivado integration, constraint definition, and timing closure on ZCU216 RFSoC</li>
+          <li>Complete UVM verification environments for tracking channel and baseband blocks</li>
+          <li>Python/cocotb simulations with pipeline latency calibration</li>
+          <li>CI/CD regression testing via GitLab</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">VHDL</span><span class="tag">UVM</span><span class="tag">Cocotb</span><span class="tag">Vivado</span><span class="tag">ZCU216</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-item">
+      <div class="proj-header" onclick="toggleProj(this)">
+        <div>
+          <div class="proj-title">FPGA Intelligent Parking Management System</div>
+          <div class="exp-company" style="margin-top:2px">Basys-3 (Xilinx Artix-7)</div>
+        </div>
+        <div class="exp-right">
+          <span class="proj-date">2023</span>
+          <span class="toggle">+</span>
+        </div>
+      </div>
+      <div class="proj-body">
+        <ul>
+          <li>Digital control system implemented entirely in VHDL on Basys-3</li>
+          <li>Real-time parking space detection and state management</li>
+          <li>Synchronous digital architecture with hardware logic design</li>
+        </ul>
+        <div class="tags"><span class="tag">VHDL</span><span class="tag">Vivado</span><span class="tag">Artix-7</span></div>
+      </div>
+    </div>
+
+    <div class="proj-item">
+      <div class="proj-header" onclick="toggleProj(this)">
+        <div>
+          <div class="proj-title">Flight Support System — Safety-Critical Embedded</div>
+          <div class="exp-company" style="margin-top:2px">Ada · Real-time avionics simulation</div>
+        </div>
+        <div class="exp-right">
+          <span class="proj-date">2023</span>
+          <span class="toggle">+</span>
+        </div>
+      </div>
+      <div class="proj-body">
+        <ul>
+          <li>Real-time embedded flight support system simulating avionics logic</li>
+          <li>Ada-based modular architecture for safety-critical applications</li>
+          <li>Deterministic execution under hard real-time constraints</li>
+        </ul>
+        <div class="tags"><span class="tag">Ada</span><span class="tag">Real-time</span><span class="tag">Embedded</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Education -->
+  <div class="section">
+    <div class="section-label">Education</div>
+    <div class="edu-item">
+      <div>
+        <div class="edu-degree">B.Sc. + M.Sc. in Computer Engineering</div>
+        <div class="edu-school">Universidad Politécnica de Madrid</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="section">
+    <div class="section-label">Skills</div>
+    <div class="skills-grid">
+      <span class="skill-label">FPGA &amp; RTL</span>
+      <span class="skill-val">VHDL, Vivado, ModelSim, QuestaSim, Xilinx RFSoC</span>
+      <span class="skill-label">Verification</span>
+      <span class="skill-val">UVM, Cocotb, VUnit, automated testbenches</span>
+      <span class="skill-label">Embedded</span>
+      <span class="skill-val">ESP32, C/C++, I2C/SPI, real-time systems</span>
+      <span class="skill-label">Software</span>
+      <span class="skill-val">Python, Git, Linux, Docker, GitLab CI</span>
+      <span class="skill-label">Languages</span>
+      <span class="skill-val">Spanish — native &nbsp;·&nbsp; English — fluent</span>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-links">
+    <a href="mailto:guillermo@example.com">Email</a>
+    <a href="https://linkedin.com/in/guillermojmn" target="_blank">LinkedIn</a>
+    <a href="https://github.com/guillermojmn" target="_blank">GitHub</a>
+    <a href="https://gitlab.com/guillermojmn" target="_blank">GitLab</a>
+  </div>
+  <span class="footer-copy">© 2026 Guillermo Jiménez Antón</span>
+</footer>
+
+<script>
+  function toggle(header) {
+    const item = header.closest('.exp-item');
+    const isOpen = item.classList.contains('open');
+    item.classList.toggle('open', !isOpen);
+    header.querySelector('.toggle').textContent = isOpen ? '+' : '−';
+  }
+  function toggleProj(header) {
+    const item = header.closest('.proj-item');
+    const isOpen = item.classList.contains('open');
+    item.classList.toggle('open', !isOpen);
+    header.querySelector('.toggle').textContent = isOpen ? '+' : '−';
+  }
+</script>
+
+</body>
+</html>
